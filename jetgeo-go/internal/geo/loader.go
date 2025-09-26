@@ -58,7 +58,7 @@ func loadSingleRegion(path string) (*RegionCache, error) {
 		pts := make([]s2.Point, 0, len(ring))
 		for _, p := range ring {
 			ll := s2.LatLngFromDegrees(p.Lat, p.Lng).Normalized()
-			pts = append(pts, ll.Point())
+			pts = append(pts, s2.PointFromLatLng(ll))
 		}
 		loop := s2.LoopFromPoints(pts)
 		if loop.IsHole() {

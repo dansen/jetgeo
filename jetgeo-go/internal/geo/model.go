@@ -41,7 +41,7 @@ func (r *RegionCache) Contains(lat, lng float64) bool {
 	if len(r.Polygons) == 0 {
 		return false
 	}
-	p := s2.LatLngFromDegrees(lat, lng).Normalized().Point()
+	p := s2.PointFromLatLng(s2.LatLngFromDegrees(lat, lng).Normalized())
 	for _, poly := range r.Polygons {
 		if poly.ContainsPoint(p) {
 			return true
