@@ -100,7 +100,7 @@ if not exist "data\geodata" (
     )
     echo.
     echo 解压后的目录结构应该是: data\geodata\[省市区数据文件]
-    pause
+    echo 警告: 地理数据文件夹不存在，某些功能可能无法正常使用
 ) else (
     echo 地理数据文件夹已存在: data\geodata\
     echo.
@@ -191,5 +191,4 @@ echo 1. 确保解压地理数据到 data\geodata\ 目录
 echo 2. 示例代码中的数据路径可能需要根据实际情况调整
 echo 3. 首次运行可能需要一些时间来加载地理数据
 echo.
-
-pause
+echo 构建脚本执行完成！
