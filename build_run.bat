@@ -39,7 +39,7 @@ if /i "%CMD%"=="help" goto :help
 if /i "%CMD%"=="build" goto :build
 if /i "%CMD%"=="build-full" goto :build_full
 if /i "%CMD%"=="run-example" goto :run_example
-if /i "%CMD%"=="run-server" goto :run_server
+if /i "%CMD%"=="server" goto :run_server
 if /i "%CMD%"=="test" goto :test
 if /i "%CMD%"=="clean" goto :clean
 if /i "%CMD%"=="deploy-snapshot" goto :deploy_snapshot
@@ -73,15 +73,7 @@ goto :eof
 
 :run_server
 echo === Package jetgeo-server ===
-mvn -q -pl jetgeo-server -am package %MAVEN_ARGS% -DskipTests
-if errorlevel 1 goto :fail
-for /f "delims=" %%F in ('dir /b jetgeo-server\target^| findstr /i "jetgeo-server-.*SNAPSHOT.jar"') do set SERVER_JAR=jetgeo-server\target\%%F
-if not defined SERVER_JAR (
-    echo [ERROR] Could not find packaged server jar
-    goto :fail
-)
-echo === Run server: %SERVER_JAR% ===
-java -jar "%SERVER_JAR%"
+java -jar .\jetgeo-server\target\jetgeo-server-1.2.2-SNAPSHOT.jar --server.port=8080
 goto :eof
 
 :test
