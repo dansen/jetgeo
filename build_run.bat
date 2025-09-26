@@ -6,6 +6,7 @@ rem  Commands:
 rem     build            = mvn clean install (skip tests by default; set RUN_TESTS=1 to run tests)
 rem     build-full       = mvn clean install (always run tests)
 rem     run-example      = compile and run example JetGeoExample in jetgeo-core (example is under test sources)
+rem     run-server       = start spring boot server in jetgeo-server module
 rem     test             = run all tests (mvn -DskipTests=false test)
 rem     clean            = mvn clean
 rem     deploy-snapshot  = deploy SNAPSHOT (credentials required in settings.xml server id=central)
@@ -38,6 +39,7 @@ if /i "%CMD%"=="help" goto :help
 if /i "%CMD%"=="build" goto :build
 if /i "%CMD%"=="build-full" goto :build_full
 if /i "%CMD%"=="run-example" goto :run_example
+if /i "%CMD%"=="run-server" goto :run_server
 if /i "%CMD%"=="test" goto :test
 if /i "%CMD%"=="clean" goto :clean
 if /i "%CMD%"=="deploy-snapshot" goto :deploy_snapshot
@@ -69,6 +71,12 @@ mvn -q -pl jetgeo-core -am exec:java -Dexec.classpathScope=test -Dexec.mainClass
 if errorlevel 1 goto :fail
 goto :eof
 
+:run_server
+echo === Start jetgeo-server (Spring Boot) ===
+mvn -q -pl jetgeo-server -am spring-boot:run %MAVEN_ARGS%
+if errorlevel 1 goto :fail
+goto :eof
+
 :test
 echo === Run tests ===
 mvn -DskipTests=false test %MAVEN_ARGS%
@@ -97,6 +105,7 @@ echo Commands:
 echo   build           build (skip tests by default; set RUN_TESTS=1 to run them)
 echo   build-full      build and run tests
 echo   run-example     run jetgeo-core example JetGeoExample
+echo   run-server      run jetgeo-server Spring Boot HTTP service
 echo   test            run tests only
 echo   clean           clean
 echo   deploy-snapshot deploy SNAPSHOT version

@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+jetgeo:
+  # Use environment variable GEO_DATA_PATH first, else fallback to relative path ./data/geodata
+  geo-data-parent-path: ${GEO_DATA_PATH:./data/geodata}
+  # level can be province / city / district; default choose district
+  level: district
+
+logging:
+  level:
+    root: INFO
+    com.ling5821.jetgeo: INFO

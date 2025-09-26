@@ -11,6 +11,7 @@
     <modules>
         <module>jetgeo-core</module>
         <module>jetgeo-spring-boot-starter</module>
+        <module>jetgeo-server</module>
     </modules>
 
     <name>jetgeo</name>
