@@ -72,9 +72,16 @@ if errorlevel 1 goto :fail
 goto :eof
 
 :run_server
-echo === Start jetgeo-server (Spring Boot) ===
-mvn -q -pl jetgeo-server -am spring-boot:run %MAVEN_ARGS%
+echo === Package jetgeo-server ===
+mvn -q -pl jetgeo-server -am package %MAVEN_ARGS% -DskipTests
 if errorlevel 1 goto :fail
+for /f "delims=" %%F in ('dir /b jetgeo-server\target^| findstr /i "jetgeo-server-.*SNAPSHOT.jar"') do set SERVER_JAR=jetgeo-server\target\%%F
+if not defined SERVER_JAR (
+    echo [ERROR] Could not find packaged server jar
+    goto :fail
+)
+echo === Run server: %SERVER_JAR% ===
+java -jar "%SERVER_JAR%"
 goto :eof
 
 :test
