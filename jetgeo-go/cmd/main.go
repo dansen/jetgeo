@@ -41,10 +41,10 @@ func main() {
 		log.Fatalf("init engine: %v", err)
 	}
 
-	h := &httpx.ReverseHandler{Engine: engine, Log: logger}
-	r := httpx.NewRouter(h)
+	h := &httpx.GinHandler{Engine: engine, Log: logger}
+	g := httpx.NewGinEngine(h)
 
-	srv := &http.Server{Addr: *addr, Handler: r}
+	srv := &http.Server{Addr: *addr, Handler: g}
 	go func() {
 		log.Printf("jetgeo-go listening on %s level=%s data=%s", *addr, cfg.Level.String(), cfg.GeoDataPath)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
